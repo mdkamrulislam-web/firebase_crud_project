@@ -36,10 +36,7 @@ class FirestoreDB {
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Your Sign-up is Successful!");
 
-    storage.uploadFile(imagePath, imageName, userModel.uid).then((value) => {
-          // ignore: avoid_print
-          print("Uploaded!"),
-        });
+    storage.uploadFile(imagePath, imageName, userModel.uid);
     Navigator.pushAndRemoveUntil(
         (context),
         MaterialPageRoute(builder: (context) => const LoginScreen()),
