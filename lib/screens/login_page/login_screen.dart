@@ -114,17 +114,6 @@ class _LoginScreenState extends State<LoginScreen> {
             color: Color(0xFF1cbb7c),
           ),
         ),
-        // enabledBorder: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(10),
-        //   borderSide: BorderSide(
-        //     width: 1,
-        //     color: const Color(0xFF1cbb7c).withOpacity(0.4),
-        //   ),
-        // ),
-        // prefixIcon: const Icon(
-        //   Icons.email,
-        //   color: Color(0xFF1cbb7c),
-        // ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,
@@ -179,17 +168,6 @@ class _LoginScreenState extends State<LoginScreen> {
             color: Color(0xFF1cbb7c),
           ),
         ),
-        // enabledBorder: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(10),
-        //   borderSide: BorderSide(
-        //     width: 1,
-        //     color: const Color(0xFF1cbb7c).withOpacity(0.4),
-        //   ),
-        // ),
-        // prefixIcon: const Icon(
-        //   Icons.password_sharp,
-        //   color: Color(0xFF1cbb7c),
-        // ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,
@@ -199,7 +177,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ? Colors.grey.shade800
             : const Color(0xFFf3f3f3),
         filled: true,
-
         suffixIcon: Padding(
           padding: const EdgeInsets.only(right: 16.0),
           child: InkWell(
@@ -235,10 +212,10 @@ class _LoginScreenState extends State<LoginScreen> {
     final loginButton = ElevatedButton(
       onPressed: () {
         if (_formKey.currentState!.validate()) {
-          // logIn(emailController.text, passwordController.text);
           authController.login(
             emailController.text.trim().toLowerCase(),
             passwordController.text.trim(),
+            context,
           );
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -294,9 +271,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     // ! Sign Up with Google Button
     final signUpWithGoogleButton = ElevatedButton(
-      onPressed: () {
-        authController.signInWithGoogle();
-      },
+      onPressed: () {},
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Row(
@@ -329,7 +304,11 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-    return Scaffold(
+    return
+        // loading
+        // ? const Loading()
+        // :
+        Scaffold(
       // ! App Bar
       appBar: AppBar(
         centerTitle: true,
@@ -487,8 +466,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-
-                // const SizedBox(),
                 // ! Sign Up Button
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
@@ -500,9 +477,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(
-                    // height: 24,
-                    ),
+                const SizedBox(),
               ],
             ),
           ),
@@ -510,12 +485,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
-  // void logIn(String email, String password) {
-  //   if (_formKey.currentState!.validate()) {
-  //     Navigator.pushNamed(context, HomeScreen.id);
-  //   }
-  // }
 
   void _togglePasswordVisibility() {
     setState(() {

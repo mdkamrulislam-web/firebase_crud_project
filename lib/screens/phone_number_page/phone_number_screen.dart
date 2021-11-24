@@ -48,17 +48,6 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
       autofocus: false,
       controller: phoneNumberController,
       keyboardType: TextInputType.number,
-
-      // validator: (value) {
-      //   if (value!.isEmpty) {
-      //     return "Please Enter Your Email!";
-      //   }
-      //   //reg expression for email validation
-      //   if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
-      //     return ("Please Enter a valid email");
-      //   }
-      //   return null;
-      // },
       onSaved: (value) {
         phoneNumberController.text = value!;
       },

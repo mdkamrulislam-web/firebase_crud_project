@@ -62,12 +62,9 @@ class _MyAppState extends State<MyApp> {
         theme: CustomTheme.lightTheme,
         darkTheme: CustomTheme.darkTheme,
         themeMode: currentTheme.currentTheme,
-
         debugShowCheckedModeBanner: false,
-        initialRoute: LoginScreen.id,
-        // ChapterList.id,
+        initialRoute: auth.currentUser == null ? LoginScreen.id : HomeScreen.id,
         routes: {
-
           // ! Task 4
           LoginScreen.id: (context) => const LoginScreen(),
           ForgotPasswordScreen.id: (context) => const ForgotPasswordScreen(),
@@ -84,7 +81,7 @@ class _MyAppState extends State<MyApp> {
         title: 'Login Signup Demo',
 
         translations: LocaleString(),
-        locale: const  Locale('en', 'US'),
+        locale: const Locale('en', 'US'),
       ),
     );
   }

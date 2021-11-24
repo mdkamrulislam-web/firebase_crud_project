@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -64,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: [
               IconButton(
                 onPressed: () {
-                  authController.logout();
+                  authController.logout(context);
                 },
                 icon: const Icon(Icons.logout),
                 color: const Color(0xFF1cbb7c),
@@ -113,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       height: 5,
                                     ),
                                     Text(
-                                      '${loggedInUser.email}',
+                                      loggedInUser.email,
                                       style: TextStyle(
                                         color: Colors.grey.shade400,
                                         fontSize: 20,

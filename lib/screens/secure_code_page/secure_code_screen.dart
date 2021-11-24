@@ -221,7 +221,6 @@ class _PhoneNumberScreenState extends State<SecureCodeScreen> {
               FocusScope.of(context).previousFocus();
             }
           },
-          // obscureText: true,
           showCursor: false,
           readOnly: false,
           textAlign: TextAlign.center,

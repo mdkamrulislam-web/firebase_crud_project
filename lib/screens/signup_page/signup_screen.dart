@@ -1,7 +1,7 @@
 import 'dart:io';
-import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_crud_project/constants/firebase_auth_constants.dart';
@@ -25,6 +25,8 @@ class _SignupScreenState extends State<SignupScreen> {
 
   // * Importing Image or Taking Image
   XFile? _image;
+  String imagePath = "";
+  String imageName = "";
 
   // * Form Key
   final _formKey = GlobalKey<FormState>();
@@ -326,13 +328,19 @@ class _SignupScreenState extends State<SignupScreen> {
     // ! Sign Up Button
     final signUpButton = ElevatedButton(
       onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          // signUp(emailController.text, passwordController.text);
+        // ignore: avoid_print
+        print(imagePath);
+        // ignore: avoid_print
+        print(imageName);
+        if (_formKey.currentState!.validate() && imagePath != "") {
           authController.register(
             emailController.text.trim(),
             passwordController.text.trim(),
             firstNameController.text,
             lastNameController.text,
+            imagePath,
+            imageName,
+            context,
           );
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -340,6 +348,8 @@ class _SignupScreenState extends State<SignupScreen> {
               content: Text("Processing Data"),
             ),
           );
+        } else {
+          Fluttertoast.showToast(msg: "No Photo was selected!");
         }
       },
       child: Padding(
@@ -452,12 +462,10 @@ class _SignupScreenState extends State<SignupScreen> {
           ),
         ],
       ),
-      // backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 16, left: 16.0, right: 16.0),
           child: ListView(
-            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 "signUp".tr,
@@ -481,19 +489,17 @@ class _SignupScreenState extends State<SignupScreen> {
                                 ? Image.asset('assets/images/transparent.png')
                                 : Container(
                                     decoration: BoxDecoration(
-                                        color: const Color(0xFFf3f3f3),
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                          fit: BoxFit.fill,
-                                          image: FileImage(
-                                            File(_image!.path),
+                                      color: const Color(0xFFf3f3f3),
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: FileImage(
+                                          File(
+                                            _image!.path,
                                           ),
-                                        )),
-                                    // child: Image(
-                                    //   image: FileImage(
-                                    //     File(_image!.path),
-                                    //   ),
-                                    // ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                           ),
                     Positioned(
@@ -694,87 +700,15 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  void _handleImage({required ImageSource source}) async {
+  _handleImage({required ImageSource source}) async {
     Navigator.pop(context);
     XFile? imageFile = await ImagePicker().pickImage(source: source);
     if (imageFile != null) {
       setState(() {
         _image = imageFile;
+        imagePath = _image!.path;
+        imageName = _image!.name;
       });
     }
   }
-
-  // void signUp(String email, String password) {
-  //   if (_formKey.currentState!.validate()) {
-  //     Navigator.pushNamed(context, HomeScreen.id);
-  //   }
-  // }
-
-  // ? Welcome
-  // Row(
-  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //   children: [
-  //     GestureDetector(
-  //       onTap: () {
-  //         setState(() {
-  //           // ignore: avoid_print
-  //           print("Going Back!");
-  //           Navigator.pop(context);
-  //         });
-  //       },
-  //       child: Row(
-  //         children: const [
-  //           Icon(
-  //             Icons.arrow_back_ios_new,
-  //             color: Color(0xFF1cbb7c),
-  //           ),
-  //           Text(
-  //             "Back",
-  //             style: TextStyle(
-  //               fontSize: 18,
-  //               fontWeight: FontWeight.w500,
-  //               color: Color(0xFF1cbb7c),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //     Row(
-  //       children: [
-  //         const Text(
-  //           "Welcome",
-  //           style: TextStyle(
-  //             fontSize: 18,
-  //             fontWeight: FontWeight.w600,
-  //           ),
-  //         ),
-  //         SizedBox(
-  //           width: size.width / 15,
-  //         )
-  //       ],
-  //     ),
-  //     GestureDetector(
-  //       onTap: () {
-  //         setState(() {
-  //           // ignore: avoid_print
-  //           print("Showing Info!");
-  //           Navigator.pushNamed(context, InfoScreen.id);
-  //         });
-  //       },
-  //       child: Row(
-  //         crossAxisAlignment: CrossAxisAlignment.end,
-  //         children: const [
-  //           Text(
-  //             "Info",
-  //             style: TextStyle(
-  //               fontSize: 18,
-  //               fontWeight: FontWeight.w500,
-  //               color: Color(0xFF1cbb7c),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   ],
-  // ),
 }
