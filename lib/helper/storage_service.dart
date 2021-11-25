@@ -7,7 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class Storage extends ChangeNotifier {
   Storage();
-  String? downloadURL;
+  String? downloadURL = " ";
   final FirebaseStorage storage = FirebaseStorage.instance;
 
   // ! Uploading Image on Firebase Storage and Saving Download URL in Firebase Firestore Database
